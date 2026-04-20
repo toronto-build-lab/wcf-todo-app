@@ -55,5 +55,47 @@ namespace TodoWeb
             // Refresh grid
             BindGrid();
         }
+
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView1.EditIndex = e.NewEditIndex;
+            BindGrid();
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            BindGrid();
+        }
+
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            string id = GridView1.DataKeys[e.RowIndex].Value.ToString();
+
+            // Extract updated values from GridView columns
+            GridViewRow row = GridView1.Rows[e.RowIndex];
+            string name = ((TextBox)row.Cells[1].Controls[0]).Text;
+            string notes = ((TextBox)row.Cells[2].Controls[0]).Text;
+
+            TodoServiceClient client = new TodoServiceClient();
+
+            // Fetch existing to preserve its Done property
+            var existingItems = client.GetTodoItems();
+            var existingItem = existingItems.FirstOrDefault(i => i.ID == id);
+            bool done = existingItem != null ? existingItem.Done : false;
+
+            TodoItem updatedItem = new TodoItem
+            {
+                ID = id,
+                Name = name,
+                Notes = notes,
+                Done = done
+            };
+
+            client.EditTodoItem(updatedItem);
+
+            GridView1.EditIndex = -1;
+            BindGrid();
+        }
     }
 }

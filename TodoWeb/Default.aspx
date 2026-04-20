@@ -29,12 +29,16 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowDeleting="GridView1_RowDeleting">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" 
+        OnRowDeleting="GridView1_RowDeleting"
+        OnRowEditing="GridView1_RowEditing"
+        OnRowCancelingEdit="GridView1_RowCancelingEdit"
+        OnRowUpdating="GridView1_RowUpdating">
         <Columns>
-            <asp:BoundField DataField="ID" HeaderText="ID" ItemStyle-Width="250" />
+            <asp:BoundField DataField="ID" HeaderText="ID" ItemStyle-Width="250" ReadOnly="True" />
             <asp:BoundField DataField="Name" HeaderText="Name" ItemStyle-Width="150" />
             <asp:BoundField DataField="Notes" HeaderText="Notes" ItemStyle-Width="200" />
-            <asp:CommandField ShowDeleteButton="True" />
+            <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
         </Columns>
     </asp:GridView>
 
