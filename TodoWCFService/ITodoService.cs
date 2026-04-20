@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ServiceModel;
+using CoreWCF;
 using Todo.TodoWCFService.Models;
 
 namespace Todo.TodoWCFService

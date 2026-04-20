@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
+using CoreWCF;
 using Todo.TodoWCFService.Models;
 using Todo.TodoWCFService.Services;
 
