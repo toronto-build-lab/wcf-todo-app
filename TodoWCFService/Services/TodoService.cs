@@ -12,7 +12,7 @@ namespace Todo.TodoWCFService.Services
         {
             if (repository == null)
             {
-                throw new ArgumentNullException("repository");
+                throw new ArgumentNullException(nameof(repository));
             }
 
             _repository = repository;
@@ -22,7 +22,7 @@ namespace Todo.TodoWCFService.Services
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentNullException(id);
+                throw new ArgumentNullException(nameof(id));
             }
 
             return _repository.DoesItemExist(id);
@@ -32,7 +32,7 @@ namespace Todo.TodoWCFService.Services
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentNullException("id");
+                throw new ArgumentNullException(nameof(id));
             }
 
             return _repository.Find(id);
@@ -47,7 +47,7 @@ namespace Todo.TodoWCFService.Services
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             }
 
             _repository.Insert(item);
@@ -57,7 +57,7 @@ namespace Todo.TodoWCFService.Services
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             }
 
             _repository.Update(item);
@@ -67,7 +67,7 @@ namespace Todo.TodoWCFService.Services
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentNullException("id");
+                throw new ArgumentNullException(nameof(id));
             }
 
             _repository.Delete(id);
