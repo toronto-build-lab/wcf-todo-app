@@ -9,11 +9,16 @@ namespace Todo.TodoWCFService
 {
     public class TodoService : ITodoService
     {
-        static readonly Services.ITodoService todoService = new Services.TodoService(new TodoRepository());
+        private readonly Services.ITodoService _todoService;
+
+        public TodoService(Services.ITodoService todoService)
+        {
+            _todoService = todoService ?? throw new ArgumentNullException(nameof(todoService));
+        }
 
         public List<TodoItem> GetTodoItems()
         {
-            return todoService.GetData().ToList();
+            return _todoService.GetData().ToList();
         }
 
         public void CreateTodoItem(TodoItem item)
@@ -28,12 +33,12 @@ namespace Todo.TodoWCFService
                 }
 
                 // Determine if the ID already exists
-                var itemExists = todoService.DoesItemExist(item.ID);
+                var itemExists = _todoService.DoesItemExist(item.ID);
                 if (itemExists)
                 {
                     throw new FaultException("TodoItem ID is in use");
                 }
-                todoService.InsertData(item);
+                _todoService.InsertData(item);
             }
             catch (Exception ex)
             {
@@ -52,10 +57,10 @@ namespace Todo.TodoWCFService
                     throw new FaultException("TodoItem name and notes fields are required");
                 }
 
-                var todoItem = todoService.Find(item.ID);
+                var todoItem = _todoService.Find(item.ID);
                 if (todoItem != null)
                 {
-                    todoService.UpdateData(item);
+                    _todoService.UpdateData(item);
                 }
                 else
                 {
@@ -72,10 +77,10 @@ namespace Todo.TodoWCFService
         {
             try
             {
-                var todoItem = todoService.Find(id);
+                var todoItem = _todoService.Find(id);
                 if (todoItem != null)
                 {
-                    todoService.DeleteData(id);
+                    _todoService.DeleteData(id);
                 }
                 else
                 {
