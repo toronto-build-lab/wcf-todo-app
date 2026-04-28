@@ -17,12 +17,12 @@ Phase 1 scope:
 Quick start for SPA:
 1. Ensure Node 20.19+ or 22.12+ is installed.
 2. Bootstrap pnpm (preferred):
-	- `corepack enable`
-	- `corepack prepare pnpm@latest --activate`
+   - `corepack enable`
+   - `corepack prepare pnpm@latest --activate`
 3. Run the app:
-	- `cd todo-spa`
-	- `pnpm install`
-	- `pnpm run dev`
+   - `cd todo-spa`
+   - `pnpm install`
+   - `pnpm run dev`
 
 Useful SPA commands:
 - `pnpm run build`
