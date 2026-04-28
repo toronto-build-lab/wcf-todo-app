@@ -22,6 +22,7 @@ export type TodoAction =
 
 export const TODO_STORAGE_KEY = 'todo-spa/state'
 export const TODO_SCHEMA_VERSION = 1
+export const THEME_STORAGE_KEY = 'todo-spa/theme'
 
 export const initialTodoState: TodoState = {
   version: TODO_SCHEMA_VERSION,
@@ -83,6 +84,29 @@ export function saveTodoState(state: TodoState): void {
   }
 
   window.localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(state))
+}
+
+export function loadThemePreference(): ThemePreference {
+  if (typeof window === 'undefined') {
+    return 'light'
+  }
+
+  const stored = window.localStorage.getItem(THEME_STORAGE_KEY)
+  if (stored === 'light' || stored === 'dark') {
+    return stored
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+}
+
+export function saveThemePreference(mode: ThemePreference): void {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  window.localStorage.setItem(THEME_STORAGE_KEY, mode)
 }
 
 export function todoReducer(state: TodoState, action: TodoAction): TodoState {

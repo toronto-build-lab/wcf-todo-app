@@ -18,9 +18,18 @@ import {
   Stack,
   TextField,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material'
-import { loadTodoState, saveTodoState, todoReducer } from './todos'
+import IconButton from '@mui/material/IconButton'
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded'
+import {
+  loadTodoState,
+  saveTodoState,
+  todoReducer,
+  type ThemePreference,
+} from './todos'
 
 type EditDraft = {
   id: string
@@ -28,11 +37,18 @@ type EditDraft = {
   notes: string
 }
 
-function App() {
+type AppProps = {
+  themeMode: ThemePreference
+  onToggleTheme: () => void
+}
+
+function App({ themeMode, onToggleTheme }: AppProps) {
   const [state, dispatch] = useReducer(todoReducer, undefined, loadTodoState)
   const [newTitle, setNewTitle] = useState('')
   const [newNotes, setNewNotes] = useState('')
   const [editDraft, setEditDraft] = useState<EditDraft | null>(null)
+
+  const completedCount = state.items.filter((item) => item.done).length
 
   useEffect(() => {
     saveTodoState(state)
@@ -75,17 +91,46 @@ function App() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
-      <AppBar position="static" color="transparent" elevation={0}>
-        <Toolbar>
-          <Typography variant="h6" component="h1" sx={{ fontWeight: 600 }}>
-            Todo SPA (Phase B)
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background:
+          themeMode === 'light'
+            ? 'radial-gradient(circle at 0% 0%, #E3F5F2 0%, #F8FAF7 45%)'
+            : 'radial-gradient(circle at 0% 0%, #1F2E2C 0%, #0F1717 50%)',
+      }}
+    >
+      <AppBar position="sticky" color="transparent" elevation={0}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Typography variant="h6" component="h1" sx={{ fontWeight: 700 }}>
+            Todo SPA (Phase C)
           </Typography>
+          <Tooltip
+            title={
+              themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+            }
+          >
+            <IconButton aria-label="Toggle theme mode" onClick={onToggleTheme}>
+              {themeMode === 'light' ? (
+                <DarkModeRoundedIcon />
+              ) : (
+                <LightModeRoundedIcon />
+              )}
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
 
       <Container maxWidth="md" sx={{ py: 6 }}>
-        <Paper variant="outlined" sx={{ p: 3, mb: 3 }}>
+        <Paper
+          variant="outlined"
+          sx={{
+            p: 3,
+            mb: 3,
+            backdropFilter: 'blur(4px)',
+            backgroundColor: 'background.paper',
+          }}
+        >
           <Typography variant="h5" component="h2" gutterBottom>
             Add a task
           </Typography>
@@ -113,9 +158,18 @@ function App() {
           </Box>
         </Paper>
 
-        <Paper variant="outlined" sx={{ p: 3 }}>
+        <Paper
+          variant="outlined"
+          sx={{
+            p: 3,
+            backgroundColor: 'background.paper',
+          }}
+        >
           <Typography variant="h5" component="h2" gutterBottom>
             Tasks ({state.items.length})
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Completed: {completedCount} of {state.items.length}
           </Typography>
 
           {state.items.length === 0 ? (
@@ -128,6 +182,7 @@ function App() {
                 <Box key={item.id}>
                   <ListItem
                     disableGutters
+                    sx={{ py: 1.5 }}
                     secondaryAction={
                       <Stack direction="row" spacing={1}>
                         <Button
@@ -168,6 +223,7 @@ function App() {
                         primary: {
                           sx: {
                             textDecoration: item.done ? 'line-through' : 'none',
+                            fontWeight: 600,
                           },
                         },
                       }}
