@@ -215,12 +215,16 @@ function App({ themeMode, onToggleTheme }: AppProps) {
                       onChange={() =>
                         dispatch({ type: 'toggle', payload: { id: item.id } })
                       }
+                      inputProps={{
+                        'aria-labelledby': `todo-title-${item.id}`,
+                      }}
                     />
                     <ListItemText
                       primary={item.title}
                       secondary={item.notes || 'No notes'}
                       slotProps={{
                         primary: {
+                          id: `todo-title-${item.id}`,
                           sx: {
                             textDecoration: item.done ? 'line-through' : 'none',
                             fontWeight: 600,
