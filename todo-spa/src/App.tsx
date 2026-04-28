@@ -103,7 +103,7 @@ function App({ themeMode, onToggleTheme }: AppProps) {
       <AppBar position="sticky" color="transparent" elevation={0}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Typography variant="h6" component="h1" sx={{ fontWeight: 700 }}>
-            Todo SPA (Phase C)
+            Todo App
           </Typography>
           <Tooltip
             title={
