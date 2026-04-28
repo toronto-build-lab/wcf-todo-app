@@ -179,8 +179,9 @@ function App({ themeMode, onToggleTheme }: AppProps) {
           ) : (
             <List disablePadding>
               {state.items.map((item, index) => (
-                <Box key={item.id}>
+                <Box key={item.id} component="li" sx={{ listStyle: 'none' }}>
                   <ListItem
+                    component="div"
                     disableGutters
                     sx={{ py: 1.5 }}
                     secondaryAction={
@@ -233,7 +234,7 @@ function App({ themeMode, onToggleTheme }: AppProps) {
                       }}
                     />
                   </ListItem>
-                  {index < state.items.length - 1 && <Divider component="li" />}
+                  {index < state.items.length - 1 && <Divider />}
                 </Box>
               ))}
             </List>
