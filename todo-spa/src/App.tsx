@@ -216,8 +216,10 @@ function App({ themeMode, onToggleTheme }: AppProps) {
                       onChange={() =>
                         dispatch({ type: 'toggle', payload: { id: item.id } })
                       }
-                      inputProps={{
-                        'aria-labelledby': `todo-title-${item.id}`,
+                      slotProps={{
+                        input: {
+                          'aria-labelledby': `todo-title-${item.id}`,
+                        },
                       }}
                     />
                     <ListItemText
