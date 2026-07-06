@@ -1,4 +1,4 @@
-# Phase 1 Manual QA Checklist
+# Manual QA Checklist
 
 ## CRUD Flow
 
