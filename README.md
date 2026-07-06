@@ -51,6 +51,26 @@ The service, matching original WCF behaviors on `/TodoService.svc`, exposes:
 - `EditTodoItem` - update existing entries
 - `DeleteTodoItem` - delete a record
 
+To spin up the service for integration validation and testing:
+```bash
+cd TodoWCFService
+dotnet run
+```
+
+---
+
+## TodoCliClient
+A super-lightweight .NET 8 console test harness for validating the legacy `TodoService` endpoints. 
+
+- **Proxy Generation:** Uses the modern `dotnet-svcutil` CLI tool to parse service WSDL files and automatically generate type-safe proxy clients ([TodoCliClient/Reference.cs](TodoCliClient/Reference.cs)). This streamlines setup, updates, and service-boundary client integrations.
+- **Service Verification:** Allows rapid sanity checking of connection rules and CRUD transactions directly from a lightweight shell without needing browser dependency setups.
+
+To run the .NET CLI Client:
+```bash
+cd TodoCliClient
+dotnet run
+```
+
 ---
 
 ## Getting Started with the SPA & Client CLI
