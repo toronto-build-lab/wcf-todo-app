@@ -38,7 +38,7 @@ graph TD
 The modernization focuses on validating the **SOAP service boundary**:
 * **Integration Sufficiency:** Rather than relying on a heavy React interface to prove backend viability, we utilize a lightweight, Node.js-based SOAP client harness (`todo-spa/src/client`).
 * **Contract Validation:** The CLI harness performs rigorous API contract verification and data schema validation against the runtime WCF service.
-* **Parallel Migration Paths:** By validating the modernized CoreWCF backend in isolation, the business can establish a parallel greenfield operations path (such as deploying to a modern cloud cluster) whilst keeping historical operations running concurrently to prevent service disruptions.
+* **Parallel Migration Paths:** By validating the modernized CoreWCF backend in isolation, the business can establish a parallel greenfield operations path (such as deploying to a modern cloud cluster) while keeping historical operations running concurrently to prevent service disruptions.
 
 ---
 
