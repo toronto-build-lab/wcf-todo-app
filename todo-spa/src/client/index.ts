@@ -183,12 +183,12 @@ async function runCli(client: Client, args: string[]): Promise<void> {
     printDiagnostics(client)
   } else if (flag === '--fault') {
     // Diagnostic: intentionally sends an EditTodoItem request with a non-existent ID
-    // to trigger an unhandled ArgumentOutOfRangeException on the service, which WCF
+    // to trigger a handled 'item not found' exception on the service, which WCF
     // wraps as a SOAP fault. Bypasses the harness pre-check intentionally.
     const fakeId = args[1] ?? 'does-not-exist'
-    console.log(info(`Sending EditTodoItem with fake ID "${fakeId}" to provoke a SOAP fault…`))
+    console.log(info(`Sending EditTodoItem with fake ID "${fakeId}" to provoke a 'TodoItem not found' SOAP fault…`))
     await client.EditTodoItemAsync({
-      item: { attributes: { 'xmlns:d': ITEM_NS }, ID: fakeId, Name: 'fault-test', Notes: '', Done: false },
+      item: { attributes: { 'xmlns:d': ITEM_NS }, ID: fakeId, Name: 'fault-test-name', Notes: 'fault-test-notes', Done: false },
     })
   } else {
     console.error(fail(`Unknown flag: ${flag}`))
