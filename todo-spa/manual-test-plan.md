@@ -3,7 +3,6 @@
 ## CRUD Flow
 
 - [ ] Create a task with title and notes.
-- [ ] Create a task with title only.
 - [ ] Edit an existing task title and notes.
 - [ ] Delete an existing task.
 - [ ] Toggle task complete/incomplete state.

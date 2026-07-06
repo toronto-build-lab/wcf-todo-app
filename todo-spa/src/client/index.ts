@@ -7,7 +7,7 @@
  * Usage:
  *   pnpm run client                   — interactive menu
  *   pnpm run client -- --list         — list all todos
- *   pnpm run client -- --create "Buy milk"
+ *   pnpm run client -- --create "Buy milk" "organic whole milk"
  *   pnpm run client -- --edit   <id> "Updated title"
  *   pnpm run client -- --delete <id>
  *   pnpm run client -- --wsdl         — dump discovered WSDL methods (diagnostics)
@@ -89,8 +89,11 @@ async function listItems(client: Client): Promise<SoapTodoItem[]> {
 async function createItem(
   client: Client,
   name: string,
-  notes = '',
+  notes: string,
 ): Promise<void> {
+  if (!name.trim() || !notes.trim()) {
+    throw new Error('Both title and notes must be non-empty strings')
+  }
   const item: SoapTodoItem = {
     ID: randomUUID(),
     Name: name,
@@ -158,8 +161,8 @@ async function runCli(client: Client, args: string[]): Promise<void> {
     console.log(ok(`${items.length} item(s) retrieved`))
   } else if (flag === '--create') {
     const name = args[1]
-    const notes = args[2] ?? ''
-    if (!name) throw new Error('--create requires a title argument')
+    const notes = args[2]
+    if (!name || !notes) throw new Error('--create requires both a title and a notes argument')
     console.log(info(`Creating "${name}"…`))
     await createItem(client, name, notes)
     console.log(ok('Item created'))
@@ -224,9 +227,10 @@ async function runMenu(client: Client): Promise<void> {
         printItems(items)
         console.log(ok(`${items.length} item(s)`))
       } else if (choice === '2') {
-        const name = await prompt('Title:')
+        const name = await prompt('Title (required):')
         if (!name) { console.log(fail('Title is required')); continue }
-        const notes = await prompt('Notes (optional):')
+        const notes = await prompt('Notes (required):')
+        if (!notes) { console.log(fail('Notes is required')); continue }
         await createItem(client, name, notes)
         console.log(ok(`Created "${name}"`))
         console.log(dim('Last request XML:'))
