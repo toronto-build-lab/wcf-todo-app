@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run --passWithNoTests --environment jsdom"
+    "test": "vitest run --passWithNoTests --environment jsdom",
+    "client": "tsx src/client/index.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -32,6 +33,8 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
     "jsdom": "^29.1.0",
+    "soap": "^1.9.3",
+    "tsx": "^4.21.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10",
